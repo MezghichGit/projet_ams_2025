@@ -1,0 +1,55 @@
+<div class="row">
+  <div class="col-lg-12">
+      <div class="card" id="userList">
+          <div class="card-header border-0">
+              <div class="row align-items-center gy-3">
+                  <div class="col-sm">
+                      <h5 class="card-title mb-0">User List</h5>
+                  </div>
+              </div>
+          </div>
+
+          <div class="card-body border border-dashed border-end-0 border-start-0">
+          </div>
+
+          <div class="card-body pt-0">
+              <div class="table-responsive table-card mb-1">
+                  <table class="table table-nowrap align-middle">
+                      <thead class="text-muted table-light">
+                          <tr class="text-uppercase">
+                              <th class="sort">User ID</th>
+                              <th class="sort">Name</th>
+                              <th class="sort">Email</th>
+                              <th class="sort">Phone</th>
+                              <th class="sort">Role</th>
+                              <th class="sort">Company</th>
+                              <th class="sort">Status</th>
+                              <th class="sort">Actions</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr *ngFor="let user of users">
+                            <td>{{ user.id }}</td>
+                            <td>{{ user.firstname }} {{ user.lastname }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.phoneNumber }}</td>
+                            <td>{{ user.role }}</td>
+                            <td>{{ user.companyName }}</td>
+                            <td>{{user.status}}</td>
+                              
+                          </tr>
+                      </tbody>
+                  </table>
+
+                  <div class="noresult" *ngIf="users.length === 0">
+                      <div class="text-center">
+                          <h5 class="mt-2">No Users Found</h5>
+                          <p class="text-muted">Try adjusting your search or filters.</p>
+                      </div>
+                  </div>
+              </div>
+
+          </div>
+      </div>
+  </div>
+</div>

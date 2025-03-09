@@ -1,0 +1,13 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('./assets/libs/jsvectormap/css/jsvectormap.min.css');
+@import url('./assets/libs/swiper/swiper-bundle.min.css');
+
+@import url('./assets/css/bootstrap.min.css');
+
+@import url('./assets/css/icons.min.css');
+@import url('./assets/css/app.min.css');
+@import url('./assets/css/custom.min.css');
+
+@import "@fortawesome/fontawesome-free/css/all.min.css";
+
+

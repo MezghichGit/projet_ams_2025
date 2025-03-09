@@ -1,0 +1,202 @@
+<div class="container d-flex justify-content-center align-items-center vh-80 p-5">
+  <div class="card" style="max-width: 800px; width: 100%">
+     <div class="card-body">
+        <div class="row pt-2">
+           <div class="col-md-6 border-end">
+
+             <div class="alert alert-danger" role="alert" *ngIf="errorMsg.length">
+               <p *ngFor="let msg of errorMsg">{{msg}}</p>
+             </div>
+
+             <div class="w-full text-center">
+                 <h3 class="mb-4">{{ title }}</h3>
+              </div>
+              <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+              <div class="row">
+                 <div class="mb-3">
+                    <select
+                       class="form-control"
+                       formControlName="role"
+                       (change)="onRoleChange($event)"
+                       required
+                       >
+                       <option value="EMPLOYEE">Employee</option>
+                       <option value="TECHNICIAN">Technician</option>
+                       <option value="HR">HR</option>
+                    </select>
+                    <div
+                       *ngIf="registrationForm.get('role')?.invalid && registrationForm.get('role')?.touched"
+                       class="text-danger"
+                       >
+                       Role is required.
+                    </div>
+                 </div>
+                 <div class="mb-3">
+                  <input
+                     type="text"
+                     class="form-control"
+                     placeholder="Company Name*"
+                     formControlName="companyName"
+                     />
+                  <div
+                     *ngIf="registrationForm.get('companyName')?.invalid && registrationForm.get('companyName')?.touched"
+                     class="text-danger"
+                     >
+                     A company is required.
+                  </div>
+               </div>
+                 <div class="mb-3">
+                  <div class="col-md-12 ">
+                    <lib-country-list  [selectedCountryCode]="'tn'" [selectedCountryConfig]="config" [countryListConfig]="config" (onCountryChange)="onCountryChange($event)"></lib-country-list>
+                    <div
+                       *ngIf="registrationForm.get('country')?.invalid && registrationForm.get('country')?.touched"
+                       class="text-danger"
+                       >
+                       Country is required.
+                    </div>
+                 </div>
+                 </div>
+                 <div class="mb-3">
+                  <div class="row">
+                    <div class="col-md-4">
+                      <input
+                        type="text"
+                        class="form-control"
+                        formControlName="countryCode"
+                        [value]="selectedCountry"
+                        placeholder="Code" readonly
+                      />
+                    </div>
+                    <div class="col-md-8">
+                      <input
+                        type="tel"
+                        class="form-control"
+                        placeholder="phoneNumber1*"
+                        formControlName="phoneNumber1"
+                      />
+                      <div
+                        *ngIf="registrationForm.get('phoneNumber1')?.invalid && registrationForm.get('phoneNumber1')?.touched"
+                        class="text-danger"
+                      >
+                        phoneNumber1 number is required.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                 <div class="col-md-6 mb-3">
+                    <input
+                       type="text"
+                       class="form-control"
+                       placeholder="First Name*"
+                       formControlName="firstname"
+                       />
+                    <div
+                       *ngIf="registrationForm.get('firstname')?.invalid && registrationForm.get('firstname')?.touched"
+                       class="text-danger"
+                       >
+                       First name is required.
+                    </div>
+                 </div>
+                 <div class="col-md-6 mb-3">
+                    <input
+                       type="text"
+                       class="form-control"
+                       placeholder="Last Name*"
+                       formControlName="lastname"
+                       />
+                    <div
+                       *ngIf="registrationForm.get('lastname')?.invalid && registrationForm.get('lastname')?.touched"
+                       class="text-danger"
+                       >
+                       Last name is required.
+                    </div>
+                 </div>
+              </div>
+
+              <div class="mb-3">
+                 <input
+                    type="email"
+                    class="form-control"
+                    placeholder="Email*"
+                    formControlName="email"
+                    />
+                 <div
+                    *ngIf="registrationForm.get('email')?.invalid && registrationForm.get('email')?.touched"
+                    class="text-danger"
+                    >
+                    A valid email is required.
+                 </div>
+              </div>
+              <div class="mb-3">
+                 <div class="input-group">
+                    <input
+                       [type]="showPassword ? 'text' : 'password'"
+                       class="form-control"
+                       placeholder="Password*"
+                       formControlName="password"
+                       />
+                    <button class="btn btn-outline-primary " type="button" (click)="togglePassword()">
+                     <i  [ngClass]="showPassword?'mdi mdi-eye-off-outline'  :'mdi mdi-eye-outline'   "></i>
+
+                    </button>
+                 </div>
+                 <div
+                    *ngIf="registrationForm.get('password')?.invalid && registrationForm.get('password')?.touched"
+                    class="text-danger"
+                    >
+                    Password is required (at least 8 characters).
+                 </div>
+              </div>
+              <div class="mb-4">
+                 <div class="form-check">
+                    <input
+                       type="checkbox"
+                       class="form-check-input"
+                       id="terms"
+                       formControlName="termsAccepted"
+                       />
+                    <label class="form-check-label small" for="terms">
+                    I have read and accept velzon's terms and conditions.*
+                    </label>
+                    <div
+                       *ngIf="registrationForm.get('termsAccepted')?.invalid && registrationForm.get('termsAccepted')?.touched"
+                       class="text-danger"
+                       >
+                       You must accept the terms and conditions.
+                    </div>
+                 </div>
+              </div>
+              <button type="submit" class="btn btn-primary w-100" [disabled]="!registrationForm.valid">
+              Create Account
+              </button>
+              </form>
+           </div>
+           <div class="col-md-6 d-flex justify-content-center align-items-center">
+              <div class="ps-md-4 d-flex flex-column justify-content-center">
+                 
+                 <div class="mt-4">
+                    <img src="assets/images/login.png" alt="Logistics" class="img-fluid" />
+                 </div>
+                 <p class="text-muted mt-3">
+                    Get transport orders & increase sales with your velzon.
+                 </p>
+              </div>
+           </div>
+        </div>
+        <div class="mt-4 pt-3 border-top">
+           <div class="row">
+              <div class="col">
+                 <a href="#" class="text-decoration-none me-3 small" (click)="singIn()">Login</a>
+                 <a href="#" class="text-decoration-none me-3 small">Help</a>
+                 <a href="#" class="text-decoration-none me-3 small">Privacy Policy</a>
+                 <a href="#" class="text-decoration-none me-3 small">Terms & Conditions</a>
+                 <select class="form-select-sm d-inline-block" style="width: auto">
+                    <option>English</option>
+                 </select>
+              </div>
+           </div>
+        </div>
+     </div>
+  </div>
+</div>
