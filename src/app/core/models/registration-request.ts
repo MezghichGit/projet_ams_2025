@@ -7,5 +7,6 @@ export interface RegistrationRequest {
     companyName: string;
     phoneNumber1: number;
     country: string;
+    username:string;
   }
   

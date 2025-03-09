@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { SidebarComponent } from './layout/sidebar/sidebar.component';
 import { NgxCountriesDropdownModule } from 'ngx-countries-dropdown';
 import { ReactiveFormsModule } from '@angular/forms';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,10 @@ import { ReactiveFormsModule } from '@angular/forms';
     BrowserModule,
     AppRoutingModule,
     NgxCountriesDropdownModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+  ],
+  providers: [
+   provideHttpClient(withInterceptorsFromDi())
   ],
   bootstrap: [AppComponent]
 })

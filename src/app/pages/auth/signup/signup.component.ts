@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IConfig } from 'ngx-countries-dropdown';
 import {RegistrationRequest} from '../../../core/models/registration-request';
 import {Router} from '@angular/router';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'app-signup',
@@ -15,15 +16,14 @@ export class SignupComponent implements OnInit {
   showPassword = false;
   title = "AMS";
 
-
-
-  registerRequest: RegistrationRequest = {role:'', email: '', firstname: '', lastname: '', password: '', companyName: '', phoneNumber1: 0, country: ''};
+  registerRequest: RegistrationRequest = {role:'', email: '', username: '', firstname: '', lastname: '', password: '', companyName: '', phoneNumber1: 0, country: ''};
   errorMsg: Array<string> = [];
   successMsg: string = '';
 
 
   constructor(private fb: FormBuilder,
-              private router: Router
+              private router: Router,
+              private userService: UserService
               ) {}
 
   ngOnInit() {
@@ -31,6 +31,7 @@ export class SignupComponent implements OnInit {
   }
   initSignUpForm() {
     this.registrationForm = this.fb.group({
+      username: ['', Validators.required],
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -39,7 +40,7 @@ export class SignupComponent implements OnInit {
       companyName: ['', Validators.required],
       phoneNumber1: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(8)]],
-      role: ['EMPLOYEE', Validators.required],
+      role: ['User', Validators.required],
       termsAccepted: [false, Validators.requiredTrue],
     });
 
@@ -56,7 +57,7 @@ export class SignupComponent implements OnInit {
 
   onRoleChange(event: any) {
     this.registrationForm.get('role')?.setValue(event.target.value);
-    this.title = `Create XsupplY ${this.registrationForm.get("role")?.value.toLowerCase()} Account`;
+    this.title = `Create AMS ${this.registrationForm.get("role")?.value.toLowerCase()} Account`;
   }
 
 
@@ -86,6 +87,31 @@ export class SignupComponent implements OnInit {
     if (this.registrationForm.valid) {
       console.log(this.registrationForm.value);
       this.signUp();
+
+      let user={
+        firstname :  this.registrationForm.get('firstname')?.value,
+        lastname: this.registrationForm.get('lastname')?.value,
+        username: this.registrationForm.get('username')?.value,
+        email:this.registrationForm.get('email')?.value,
+        country:this.registrationForm.get('country')?.value,
+        companyName:this.registrationForm.get('companyName')?.value,
+        phoneNumber:this.registrationForm.get('phoneNumber1')?.value,
+        password:this.registrationForm.get('password')?.value,
+        role: this.registrationForm.get('role')?.value,
+      }
+      console.log(user);
+      this.userService.createUser(user).subscribe(
+
+        (response :any)=> {
+          this. singIn();
+        },
+    
+        error => {
+          console.log(error)
+        }
+    
+      );
+
     }
   }
 
