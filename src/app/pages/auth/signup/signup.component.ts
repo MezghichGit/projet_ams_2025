@@ -85,21 +85,20 @@ export class SignupComponent implements OnInit {
   }
   onSubmit() {
     if (this.registrationForm.valid) {
-      console.log(this.registrationForm.value);
+      //console.log(this.registrationForm.value);
       this.signUp();
 
       let user={
-        firstname :  this.registrationForm.get('firstname')?.value,
-        lastname: this.registrationForm.get('lastname')?.value,
+        firstName :  this.registrationForm.get('firstname')?.value,
+        lastName: this.registrationForm.get('lastname')?.value,
         username: this.registrationForm.get('username')?.value,
         email:this.registrationForm.get('email')?.value,
         country:this.registrationForm.get('country')?.value,
         companyName:this.registrationForm.get('companyName')?.value,
         phoneNumber:this.registrationForm.get('phoneNumber1')?.value,
         password:this.registrationForm.get('password')?.value,
-        role: this.registrationForm.get('role')?.value,
+        role: [this.registrationForm.get('role')?.value],
       }
-      console.log(user);
       this.userService.createUser(user).subscribe(
 
         (response :any)=> {
