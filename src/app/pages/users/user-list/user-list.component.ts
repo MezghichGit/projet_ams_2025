@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../../core/models/user';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { last } from 'rxjs';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'app-user-list',
@@ -12,7 +13,7 @@ export class UserListComponent implements OnInit {
   selectedUser: User | null = null;
   documents: { type: string, url: string }[] = [];
 
-  users: User[] = [];
+  users: any;
   roles: string[] = ["ADMIN", "MANAGER", "EMPLOYEE"];
   statuses: string[] = ['Verified', 'Unverified'];
 
@@ -26,51 +27,20 @@ export class UserListComponent implements OnInit {
   selectedStatus: string = '';
 
   constructor(
-              private modalService: NgbModal,
-  ) {}
+    private modalService: NgbModal,
+    private userService: UserService
+  ) { }
 
   ngOnInit(): void {
     this.fetchUsers();
   }
 
   fetchUsers(): void {
-    this.users=[
-      {
-        id: 1,
-        cin: '10000000',
-        email:'test1@gmail.com',
-        firstname:'Ahmed',
-        lastname:'Ben Ahmed',
-        phoneNumber: 90471258,
-        companyName: 'Company 1',
-        status: 'Verified',
-        role:"ADMIN",
-        password:""
-      },
-      {
-        id: 2,
-        cin: '10000001',
-        email:'test2@gmail.com',
-        firstname:'Ameni',
-        lastname:'Werteni',
-        phoneNumber: 29478541,
-        companyName: 'Company 1',
-        status: 'Verified',
-        role:"MANAGER",
-        password:""
-      },{
-        id: 3,
-        cin: '10000002',
-        email:'test1@gmail.com',
-        firstname:'Ahmed',
-        lastname:'Ben Ahmed',
-        phoneNumber: 57321469,
-        companyName: 'Company 1',
-        status: 'Verified',
-        role:"EMPLOYEE",
-        password:""
-      }
-    ]
+    this.userService.getAllUsers().subscribe(
+      data => { this.users = data },
+      error => {console.log(error)}
+    );
+
   }
 
 }

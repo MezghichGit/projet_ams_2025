@@ -18,11 +18,14 @@
                       <thead class="text-muted table-light">
                           <tr class="text-uppercase">
                               <th class="sort">User ID</th>
-                              <th class="sort">Name</th>
+                              <th class="sort">Username</th>
                               <th class="sort">Email</th>
-                              <th class="sort">Phone</th>
-                              <th class="sort">Role</th>
+                              <th class="sort">FirstName</th>
+                              <th class="sort">LastName</th>
                               <th class="sort">Company</th>
+                              <th class="sort">Phone</th>
+                              <th class="sort">Country</th>
+                              <th class="sort">Role</th>
                               <th class="sort">Status</th>
                               <th class="sort">Actions</th>
                           </tr>
@@ -30,13 +33,20 @@
                       <tbody>
                           <tr *ngFor="let user of users">
                             <td>{{ user.id }}</td>
-                            <td>{{ user.firstname }} {{ user.lastname }}</td>
+                            <td>{{ user.username }}</td>
                             <td>{{ user.email }}</td>
-                            <td>{{ user.phoneNumber }}</td>
-                            <td>{{ user.role }}</td>
+                            <td>{{ user.firstName }}</td>
+                            <td>{{ user.lastName }}</td>
                             <td>{{ user.companyName }}</td>
+                            <td>{{ user.phoneNumber }}</td>
+                            <td>{{ user.country }}</td>
+                            <td>
+                                <ul>
+                                <li *ngFor="let role of user.roles">{{ role.name }}</li>
+                                </ul>
+                            </td>
                             <td>{{user.status}}</td>
-                              
+                            <td>Show</td> 
                           </tr>
                       </tbody>
                   </table>

@@ -12,4 +12,8 @@ export class UserService {
   createUser(user: any) {
     return this.Http.post(this.urlSignUp, user);
   }
+
+  getAllUsers() {
+    return this.Http.get(environment.apiUrl+"users/");
+  }
 }
