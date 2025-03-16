@@ -1,13 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { GuardService } from './services/guard.service';
 
 const routes: Routes = [
   //{ path: '', redirectTo: '/auth/signin', pathMatch: 'full' },
   {
-    path: 'dashboard', loadChildren: () => import('./pages/dashboard/dashboard.module').then(m => m.DashboardModule)
+    path: 'dashboard', loadChildren: () => import('./pages/dashboard/dashboard.module').then(m => m.DashboardModule),
+    canActivate:[GuardService]
   } ,
   {
-    path: 'users', loadChildren: () => import('./pages/users/users.module').then(m => m.UsersModule)
+    path: 'users', loadChildren: () => import('./pages/users/users.module').then(m => m.UsersModule),
+    canActivate:[GuardService]
   },
     {
     path: 'auth', loadChildren: () => import('./pages/auth/auth.module').then(m => m.AuthModule)

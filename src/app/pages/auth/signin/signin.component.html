@@ -22,13 +22,13 @@
             <div class="mb-3">
               <div class="input-group">
                 <span class="input-group-text bg-light border-end-0"><i class="mdi mdi-email-outline"></i></span>
-                <input type="email"
+                <input type="text"
                        class="form-control border-start-0"
-                       placeholder="Email*"
-                       formControlName="email">
+                       placeholder="Username*"
+                       formControlName="username">
               </div>
-              <div *ngIf="signInForm.get('email')?.invalid && signInForm.get('email')?.touched" class="text-danger small mt-1">
-                A valid email is required.
+              <div *ngIf="signInForm.get('username')?.invalid && signInForm.get('username')?.touched" class="text-danger small mt-1">
+                A valid username is required.
               </div>
             </div>
 

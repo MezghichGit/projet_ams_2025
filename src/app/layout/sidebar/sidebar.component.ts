@@ -6,6 +6,7 @@ import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
 import adminMenu from "../../core/menu-models/adminMenu"
 import { Subscription } from 'rxjs';
+import { AuthenticationService } from '../../services/authentication.service';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -29,7 +30,8 @@ export class SidebarComponent implements OnInit {
     {message : "New Login Detected", date: "2025-02-25"},
   ];
 
-  constructor(private router: Router
+  constructor(private router: Router,
+    private authenticationService:AuthenticationService
   ) {}
 
 
@@ -45,6 +47,7 @@ export class SidebarComponent implements OnInit {
 
 
     logout(){
+      this.authenticationService.logOut();
       this.router.navigate(['/auth/signin']);
     }
 }

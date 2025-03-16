@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {AuthenticationRequest} from '../../../core/models/authentication-request';
 import {ActivatedRoute, Router} from '@angular/router';
+import { AuthenticationService } from '../../../services/authentication.service';
 
 @Component({
   selector: 'app-signin',
@@ -21,6 +22,7 @@ export class SigninComponent {
   constructor(private fb: FormBuilder,
               private router: Router,
               private route: ActivatedRoute,
+              private authenticationService:AuthenticationService
   ) {}
 
 
@@ -35,7 +37,7 @@ export class SigninComponent {
 
   initSignInForm(){
     this.signInForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      username: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(8)]],
       rememberMe: [false]
     });
@@ -58,7 +60,18 @@ export class SigninComponent {
 
   onSubmit(): void {
     if (this.signInForm.valid) {
-      this.signIn();
+      this.authenticationService.authenticate(this.signInForm.value.username, this.signInForm.value.password).subscribe(
+        (data:any) => {
+          this.router.navigate(['/dashboard'])
+          
+        },
+        (error:any) => {
+          this.router.navigate(['/auth/signin'])
+          console.log(error)
+        }
+      );
+      //console.log(this.signInForm.value)
+      //this.signIn();
   }
   }
 
